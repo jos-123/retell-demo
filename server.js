@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import fetch from 'node-fetch';
@@ -8,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -22,9 +23,12 @@ app.get('/', (req, res) => {
 // Retell AI Chat: Create a new chat session
 app.post('/api/create-chat', async (req, res) => {
     const { agent_id } = req.body;
-    const API_KEY = "key_20390a8dc73dad35b36299395309";
+    console.log(process.env.RETELL_API_KEY);
+    console.log(process.env.RETELL_CHAT_AGENT_ID);
+    console.log(process.env.API_KEY)
+    const API_KEY = process.env.RETELL_API_KEY;
     // Dedicated Chat Agent
-    const CHAT_AGENT_ID = "agent_b7206fd35476ee348219104be0";
+    const CHAT_AGENT_ID = process.env.RETELL_CHAT_AGENT_ID;
 
     try {
         // Try Retell API first (v1 endpoint as discovered)
@@ -58,7 +62,7 @@ app.post('/api/create-chat', async (req, res) => {
 // Retell AI Chat: Send message and get completion
 app.post('/api/chat-completion', async (req, res) => {
     const { chat_id, message } = req.body;
-    const API_KEY = "key_20390a8dc73dad35b36299395309";
+    const API_KEY = process.env.RETELL_API_KEY;
 
     // Handle Local Simulation
     if (chat_id && chat_id.startsWith('local_sim_')) {
@@ -111,8 +115,8 @@ app.post('/api/create-web-call', async (req, res) => {
     const { agent_id } = req.body;
 
     // Use environment variables in production
-    const API_KEY = '<YOUR_API_KEY>';
-    const DEFAULT_AGENT_ID = '<YOUR_AGENT_ID>';
+    const API_KEY = process.env.RETELL_API_KEY;
+    const DEFAULT_AGENT_ID = process.env.RETELL_CALL_AGENT_ID;
 
     try {
         const response = await fetch("https://api.retellai.com/v2/create-web-call", {
