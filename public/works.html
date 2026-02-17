@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Work | Softnotions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Softnotions<span class="dot">.</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="works.html" class="active">Works</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="cta-btn" onclick="document.getElementById('voice-trigger').click()">Get Started</button>
+    </nav>
+
+    <section class="page-header">
+        <h1>Selected <span class="highlight">Works</span></h1>
+        <p>A showcase of our recent projects and digital innovations.</p>
+    </section>
+
+    <section class="works-grid">
+        <div class="work-card">
+            <div class="work-img">
+                <img src="images/work_1.png" alt="Analytics Dashboard">
+            </div>
+            <div class="work-info">
+                <div class="work-tags">
+                    <span>FinTech</span>
+                    <span>React</span>
+                    <span>D3.js</span>
+                </div>
+                <h3>NeoFinance Dashboard</h3>
+                <p>A real-time analytics platform for next-gen financial institutions. Features AI-driven predictive
+                    modeling and sub-millisecond data visualization.</p>
+                <a href="#" class="text-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="work-card">
+            <div class="work-img">
+                <img src="images/work_2.png" alt="E-commerce Platform">
+            </div>
+            <div class="work-info">
+                <div class="work-tags">
+                    <span>E-commerce</span>
+                    <span>Next.js</span>
+                    <span>Stripe</span>
+                </div>
+                <h3>LuxeMarket</h3>
+                <p>A high-performance luxury e-commerce experience with immersive 3D product views and AI-powered
+                    personalized recommendations.</p>
+                <a href="#" class="text-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Add more work items as needed -->
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to build your next project?</h2>
+            <p>Let's turn your vision into reality with our expert team.</p>
+            <button class="primary-btn" onclick="document.getElementById('voice-trigger').click()">Start a
+                Project</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Softnotions. All rights reserved.</p>
+    </footer>
+
+    <!-- Widgets -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="widget-header">
+            <span>AI Assistant</span>
+            <div class="header-controls">
+                <button id="end-chat-btn" title="End Session"><i class="fas fa-redo"></i></button>
+                <button id="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="chat-logs" id="chat-logs">
+                <div class="message bot">
+                    Hello! I'm Scira, your HR assistant. How can I help you?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Type a message...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="voice-overlay" class="voice-overlay hidden">
+        <div class="voice-content">
+            <button id="close-voice" class="close-voice"><i class="fas fa-times"></i></button>
+            <div class="voice-header centered">
+                <h3>Voice Assistant</h3>
+                <p id="call-status">Ready to connect</p>
+            </div>
+            <div class="visualizer">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="icon-mic"><i class="fas fa-microphone"></i></div>
+            </div>
+            <div class="voice-controls">
+                <button id="toggle-call-btn" class="call-btn">Start Call</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-actions">
+        <button id="voice-trigger" class="action-btn voice-trigger">
+            <i class="fas fa-phone"></i>
+            <span class="tooltip">Call Agent</span>
+        </button>
+        <button id="chat-trigger" class="action-btn chat-trigger">
+            <i class="fas fa-comment"></i>
+            <span class="tooltip">Chat</span>
+        </button>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

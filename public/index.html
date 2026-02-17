@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Softnotions | Innovating Future Software</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Softnotions<span class="dot">.</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="works.html">Works</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="cta-btn">Get Started</button>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>We Build The <span class="highlight">Future</span></h1>
+            <p>Premium software solutions powered by Artificial Intelligence.</p>
+            <div class="hero-btns">
+                <button class="primary-btn" onclick="window.location.href='works.html'">Our Work</button>
+                <button id="hero-agent-btn" class="secondary-btn"><i class="fas fa-robot"></i> Talk to AI Agent</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="images/hero_bg.png" alt="Future Tech" class="hero-img">
+            <div class="glowing-orb"></div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <i class="fas fa-code"></i>
+                <h3>Web Development</h3>
+                <p>High-performance, scalable web applications tailored to your needs.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI Solutions</h3>
+                <p>Integrating cutting-edge AI to automate and enhance business processes.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Apps</h3>
+                <p>Native and cross-platform mobile experiences that delight users.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2>About Softnotions</h2>
+            <p>We are a team of visionary developers and designers committed to pushing the boundaries of technology. At
+                Softnotions, we don't just write code; we craft digital experiences that transform businesses.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-alternative" style="text-align: center; margin-bottom: 2rem;">
+            <p style="margin-bottom: 1rem; opacity: 0.8;">Want immediate answers?</p>
+            <button id="contact-section-btn" class="cta-btn"><i class="fas fa-phone"></i> Call AI Agent Now</button>
+        </div>
+        <form class="contact-form">
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Softnotions. All rights reserved.</p>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="widget-header">
+            <span>AI Assistant</span>
+            <div class="header-controls">
+                <button id="end-chat-btn" title="End Session"><i class="fas fa-redo"></i></button>
+                <button id="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="chat-logs" id="chat-logs">
+                <div class="message bot">
+                    Hello! I'm Scira, your HR assistant. How can I help you?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Type a message...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Call Overlay -->
+    <div id="voice-overlay" class="voice-overlay hidden">
+        <div class="voice-content">
+            <button id="close-voice" class="close-voice"><i class="fas fa-times"></i></button>
+            <div class="voice-header centered">
+                <h3>Voice Assistant</h3>
+                <p id="call-status">Ready to connect</p>
+            </div>
+            <div class="visualizer">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="icon-mic"><i class="fas fa-microphone"></i></div>
+            </div>
+            <div class="voice-controls">
+                <button id="toggle-call-btn" class="call-btn">Start Call</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <button id="voice-trigger" class="action-btn voice-trigger">
+            <i class="fas fa-phone"></i>
+            <span class="tooltip">Call Agent</span>
+        </button>
+        <button id="chat-trigger" class="action-btn chat-trigger">
+            <i class="fas fa-comment"></i>
+            <span class="tooltip">Chat</span>
+        </button>
+    </div>
+
+    <!-- Removed global script tag as we use ES module import in app.js -->
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

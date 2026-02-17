@@ -1,0 +1,531 @@
+:root {
+    --primary-color: #00f2ff;
+    --secondary-color: #7000ff;
+    --bg-dark: #0a0a0a;
+    --text-light: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.dot {
+    color: var(--primary-color);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.cta-btn {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.4);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 600px;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.highlight {
+    background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1rem;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.primary-btn {
+    background: white;
+    color: var(--bg-dark);
+}
+
+.primary-btn:hover {
+    background: var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Visual Effects */
+.glowing-orb {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
+    opacity: 0.4;
+    filter: blur(80px);
+    animation: pulse 5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+/* Services Section */
+.services {
+    padding: 5rem 10%;
+    text-align: center;
+}
+
+.services h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    border-radius: 20px;
+    transition: transform 0.3s, background 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.service-card i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.service-card h3 {
+    margin-bottom: 1rem;
+}
+
+/* --- Chat Widget (WhatsApp Style) --- */
+.chat-widget {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    background: #efe7dd;
+    /* WhatsApp default bg color */
+    /* Optional: Add a subtle pattern if possible, for now solid color */
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.chat-widget.open {
+    display: flex;
+    animation: slideIn 0.3s ease-out;
+}
+
+.widget-header {
+    background: #008069;
+    /* WhatsApp Teal */
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.widget-header span {
+    font-size: 1.1rem;
+}
+
+.widget-header .header-controls {
+    display: flex;
+    gap: 15px;
+}
+
+.widget-header button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.widget-header button:hover {
+    opacity: 1;
+}
+
+.widget-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    /* Prevent body scroll */
+}
+
+.chat-logs {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    /* Enable Scroll here */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    /* Subtle pattern */
+    background-blend-mode: soft-light;
+}
+
+/* Scrollbar styling */
+.chat-logs::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat-logs::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.message {
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
+
+.message.bot {
+    background: white;
+    color: #333;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+.message.bot::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top-color: white;
+    border-right-color: white;
+}
+
+.message.user {
+    background: #dcf8c6;
+    /* WhatsApp Light Green */
+    color: #333;
+    align-self: flex-end;
+    border-top-right-radius: 0;
+}
+
+.message.user::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -8px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top-color: #dcf8c6;
+    border-left-color: #dcf8c6;
+}
+
+.chat-input {
+    padding: 10px;
+    background: #f0f0f0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    background: white;
+    color: #333;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.chat-input button {
+    background: #008069;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.chat-input button:hover {
+    background: #006c59;
+}
+
+/* --- Voice Overlay --- */
+.voice-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    /* Flex to center content */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.voice-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.voice-content {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.voice-overlay.active .voice-content {
+    transform: scale(1);
+}
+
+.close-voice {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.close-voice:hover {
+    opacity: 1;
+}
+
+.voice-header {
+    margin-bottom: 2rem;
+}
+
+.voice-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    /* Standard property */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Floating Action Buttons --- */
+.floating-actions {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    /* Align right */
+    gap: 15px;
+    z-index: 1000;
+    align-items: center;
+}
+
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, background 0.3s;
+    position: relative;
+}
+
+.action-btn:hover {
+    transform: translateY(-5px);
+}
+
+.chat-trigger {
+    background: #25D366;
+    /* WhatsApp Green */
+}
+
+.voice-trigger {
+    background: linear-gradient(135deg, #00f2ff, #0072ff);
+    color: var(--bg-dark);
+    /* Dark icon for contrast */
+}
+
+/* Tooltips */
+.tooltip {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover .tooltip {
+    opacity: 1;
+}

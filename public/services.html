@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Softnotions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Softnotions<span class="dot">.</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="works.html">Works</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="cta-btn" onclick="document.getElementById('voice-trigger').click()">Get Started</button>
+    </nav>
+
+    <section class="page-header">
+        <h1>Our <span class="highlight">Services</span></h1>
+        <p>Comprehensive technology solutions to propel your business forward.</p>
+    </section>
+
+    <section class="services-detail">
+        <div class="service-block">
+            <div class="service-info">
+                <i class="fas fa-code service-icon-lg"></i>
+                <h2>Web Development</h2>
+                <p>We build robust, scalable, and visually stunning web applications. From simple landing pages to
+                    complex enterprise platforms, our code is clean, efficient, and future-proof.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Custom Frontend (React, Vue, Angular)</li>
+                    <li><i class="fas fa-check"></i> Backend API Development (Node.js, Python)</li>
+                    <li><i class="fas fa-check"></i> E-commerce Solutions</li>
+                    <li><i class="fas fa-check"></i> Progressive Web Apps (PWA)</li>
+                </ul>
+            </div>
+            <div class="service-img">
+                <img src="images/service_web.png" alt="Web Development" id="img-web">
+            </div>
+        </div>
+
+        <div class="service-block reverse">
+            <div class="service-info">
+                <i class="fas fa-robot service-icon-lg"></i>
+                <h2>AI & Machine Learning</h2>
+                <p>Leverage the power of Artificial Intelligence to automate tasks, gain insights, and engage customers.
+                    We specialize in integrating LLMs and predictive models into your business flow.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Custom Chatbots & Agents</li>
+                    <li><i class="fas fa-check"></i> Predictive Analytics</li>
+                    <li><i class="fas fa-check"></i> Natural Language Processing (NLP)</li>
+                    <li><i class="fas fa-check"></i> AI Process Automation</li>
+                </ul>
+            </div>
+            <div class="service-img">
+                <img src="images/service_ai.png" alt="AI Solutions" id="img-ai">
+            </div>
+        </div>
+
+        <div class="service-block">
+            <div class="service-info">
+                <i class="fas fa-mobile-alt service-icon-lg"></i>
+                <h2>Mobile App Development</h2>
+                <p>Reach your audience anywhere with intuitive mobile experiences. We develop native and cross-platform
+                    apps that are fast, reliable, and delightful to use.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> iOS & Android Development</li>
+                    <li><i class="fas fa-check"></i> Cross-Platform (Flutter, React Native)</li>
+                    <li><i class="fas fa-check"></i> UI/UX Design</li>
+                    <li><i class="fas fa-check"></i> App Store Optimization</li>
+                </ul>
+            </div>
+            <div class="service-img">
+                <img src="images/service_mobile.png" alt="Mobile Development" id="img-mobile">
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <h2>Simple Pricing</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price">$1,999</div>
+                <ul>
+                    <li>Landing Page</li>
+                    <li>Basic SEO</li>
+                    <li><i class="fas fa-check"></i> 1 Month Support</li>
+                </ul>
+                <button class="secondary-btn">Choose Starter</button>
+            </div>
+            <div class="price-card popular">
+                <div class="badge">Most Popular</div>
+                <h3>Growth</h3>
+                <div class="price">$4,999</div>
+                <ul>
+                    <li>Full Website (5 Pages)</li>
+                    <li>CMS Integration</li>
+                    <li><i class="fas fa-check"></i> AI Chatbot Integration</li>
+                    <li><i class="fas fa-check"></i> 3 Months Support</li>
+                </ul>
+                <button class="primary-btn">Choose Growth</button>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="price">Custom</div>
+                <ul>
+                    <li>Custom Web App</li>
+                    <li>Full AI Automation Suite</li>
+                    <li><i class="fas fa-check"></i> Dedicated Team</li>
+                    <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
+                </ul>
+                <button class="secondary-btn">Contact Us</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Softnotions. All rights reserved.</p>
+    </footer>
+
+    <!-- Widgets (Include these to preserve functionality) -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="widget-header">
+            <span>AI Assistant</span>
+            <div class="header-controls">
+                <button id="end-chat-btn" title="End Session"><i class="fas fa-redo"></i></button>
+                <button id="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="chat-logs" id="chat-logs">
+                <div class="message bot">
+                    Hello! I'm Scira, your HR assistant. How can I help you?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Type a message...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="voice-overlay" class="voice-overlay hidden">
+        <div class="voice-content">
+            <button id="close-voice" class="close-voice"><i class="fas fa-times"></i></button>
+            <div class="voice-header centered">
+                <h3>Voice Assistant</h3>
+                <p id="call-status">Ready to connect</p>
+            </div>
+            <div class="visualizer">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="icon-mic"><i class="fas fa-microphone"></i></div>
+            </div>
+            <div class="voice-controls">
+                <button id="toggle-call-btn" class="call-btn">Start Call</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-actions">
+        <button id="voice-trigger" class="action-btn voice-trigger">
+            <i class="fas fa-phone"></i>
+            <span class="tooltip">Call Agent</span>
+        </button>
+        <button id="chat-trigger" class="action-btn chat-trigger">
+            <i class="fas fa-comment"></i>
+            <span class="tooltip">Chat</span>
+        </button>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
