@@ -4,15 +4,18 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Client } from '@hubspot/api-client';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const hubspotClient = new Client({ accessToken: process.env.HUBSPOT_TOKEN });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.static('public'));
 
 // Serve the main page
@@ -25,7 +28,7 @@ app.post('/api/create-chat', async (req, res) => {
     const { agent_id } = req.body;
     console.log(process.env.RETELL_API_KEY);
     console.log(process.env.RETELL_CHAT_AGENT_ID);
-    console.log(process.env.API_KEY)
+    console.log(process.env.RETELL_API_KEY)
     const API_KEY = process.env.RETELL_API_KEY;
     // Dedicated Chat Agent
     const CHAT_AGENT_ID = process.env.RETELL_CHAT_AGENT_ID;
@@ -141,6 +144,234 @@ app.post('/api/create-web-call', async (req, res) => {
         res.status(500).json({ error: "Failed to create web call" });
     }
 });
+
+// Lead Capture Endpoint
+// app.post('/api/retell-lead', async (req, res) => {
+
+//   try {
+
+//     const event = req.body.event;
+
+//     // Only process final analyzed call
+//     if (event !== "call_analyzed") {
+//       return res.status(200).json({ message: "Event ignored" });
+//     }
+
+//     const call = req.body.call;
+
+//     const transcript = call.transcript || "";
+//     const summary = call.call_analysis?.call_summary || "";
+
+//     // Extract email
+//     const emailMatch = transcript.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}/);
+//     const email = emailMatch ? emailMatch[0] : null;
+
+//     // Extract phone
+//     const phoneMatch = transcript.match(/\+\d{10,15}/);
+//     const phone = phoneMatch ? phoneMatch[0] : null;
+
+//     // Extract name
+//     const nameMatch = transcript.match(/Name:\s([A-Za-z]+)/);
+//     const name = nameMatch ? nameMatch[1] : null;
+
+//     console.log("Lead extracted:");
+//     console.log({
+//       name,
+//       email,
+//       phone,
+//       summary
+//     });
+
+//     res.json({
+//       success: true,
+//       lead: {
+//         name,
+//         email,
+//         phone,
+//         summary
+//       }
+//     });
+
+//   } catch (error) {
+
+//     console.error("Webhook error:", error);
+
+//     res.status(500).json({
+//       success: false,
+//       error: "Webhook processing failed"
+//     });
+
+//   }
+
+// });
+
+// app.post("/api/retell-lead", async (req, res) => {
+
+//   console.log("Webhook received");
+
+//   const event = req.body.event;
+
+//   if (event !== "call_analyzed") {
+//     return res.status(200).json({ message: "Event ignored" });
+//   }
+
+//   const call = req.body.call;
+
+//   const transcript = call.transcript || "";
+//   const summary = call.call_analysis?.call_summary || "";
+
+//   const email = transcript.match(/[^\s]+@[^\s]+/)?.[0];
+//   const phone = transcript.match(/\+\d{10,15}/)?.[0];
+//   const name = transcript.match(/Name:\s([A-Za-z]+)/)?.[1];
+
+//   console.log({ name, email, phone, summary });
+
+//   res.json({ success: true });
+// });
+
+
+app.post("/api/retell-lead", async (req, res) => {
+  console.log("Webhook received");
+
+  const { event, call } = req.body;
+
+  // 1. Guard Clause
+  if (event !== "call_analyzed" || !call) {
+    return res.status(200).json({ message: "Event ignored or call data missing" });
+  }
+
+  const transcript = call.transcript || "";
+  const summary = call.call_analysis?.call_summary || "";
+
+  // 2. Extraction (Improved Regex)
+  const email = transcript.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0];
+  const phone = transcript.match(/\+?\d{10,15}/)?.[0];
+  // Note: Finding a name in a transcript via regex is tricky; 
+  // ensure your Retell prompt explicitly outputs "Name: [Value]"
+  const name = transcript.match(/Name:\s*([A-Za-z]+)/i)?.[1];
+
+  console.log("Extracted Data:", { name, email, phone, summary });
+
+  // 3. Prepare HubSpot Properties
+  const properties = {
+    firstname: name || "Retell Lead",
+    email: email,
+    phone: phone,
+    message: summary 
+  };
+
+  // 4. HubSpot Logic
+  if (!email) {
+    console.error("No email found in transcript. Cannot create/update HubSpot contact.");
+    return res.status(400).json({ error: "Missing email" });
+  }
+
+  try {
+    const apiResponse = await hubspotClient.crm.contacts.basicApi.create({ properties });
+    console.log(`Contact created. ID: ${apiResponse.id}`);
+  } catch (error) {
+    // Check specifically for 409 Conflict (Contact already exists)
+    if (error.code === 409 || error.status === 409) {
+      console.log("Contact exists. Updating via email...");
+      try {
+        // We use the email as the unique identifier for the update
+        await hubspotClient.crm.contacts.basicApi.update(email, { properties }, 'email');
+        console.log("Contact updated successfully.");
+      } catch (updateError) {
+        console.error("Update failed:", updateError.body?.message || updateError.message);
+      }
+    } else {
+      console.error("HubSpot API Error:", error.body?.message || error.message);
+    }
+  }
+
+  res.json({ success: true });
+});
+
+
+// app.post("/api/retell-lead", async (req, res) => {
+
+//   if (req.body.event !== "call_analyzed") {
+//     return res.status(200).json({ message: "Ignored" });
+//   }
+
+//   const call = req.body.call;
+
+//   const transcript = call.transcript || "";
+//   const summary = call.call_analysis?.call_summary || "";
+
+//   const email = transcript.match(/[^\s]+@[^\s]+/)?.[0];
+//   const phone = transcript.match(/\+\d{10,15}/)?.[0];
+//   const name = transcript.match(/Name:\s([A-Za-z]+)/)?.[1];
+
+//   try {
+
+//     // Search contact
+//     const search = await axios.post(
+//       "https://api.hubapi.com/crm/v3/objects/contacts/search",
+//       {
+//         filterGroups: [{
+//           filters: [{
+//             propertyName: "email",
+//             operator: "EQ",
+//             value: email
+//           }]
+//         }]
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${process.env.HUBSPOT_TOKEN}`
+//         }
+//       }
+//     );
+
+//     const contactId = search.data.results[0]?.id;
+
+//     // Update phone
+//     await axios.patch(
+//       `https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
+//       {
+//         properties: {
+//           phone: phone
+//         }
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${process.env.HUBSPOT_TOKEN}`
+//         }
+//       }
+//     );
+
+//     // Create note with summary
+//     await axios.post(
+//       "https://api.hubapi.com/crm/v3/objects/notes",
+//       {
+//         properties: {
+//           hs_note_body: summary
+//         },
+//         associations: [{
+//           to: { id: contactId },
+//           types: [{
+//             associationCategory: "HUBSPOT_DEFINED",
+//             associationTypeId: 202
+//           }]
+//         }]
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${process.env.HUBSPOT_TOKEN}`
+//         }
+//       }
+//     );
+
+//     res.json({ success: true });
+
+//   } catch (error) {
+//     console.error(error.response?.data || error.message);
+//     res.status(500).json({ error: "HubSpot update failed" });
+//   }
+
+// });
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
