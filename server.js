@@ -243,12 +243,17 @@ app.post("/api/retell-lead", async (req, res) => {
   const transcript = call.transcript || "";
   const summary = call.call_analysis?.call_summary || "";
 
-  // 2. Extraction (Improved Regex)
-  const email = transcript.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0];
-  const phone = transcript.match(/\+?\d{10,15}/)?.[0];
-  // Note: Finding a name in a transcript via regex is tricky; 
-  // ensure your Retell prompt explicitly outputs "Name: [Value]"
-  const name = transcript.match(/Name:\s*([A-Za-z]+)/i)?.[1];
+  console.log(transcript, "CALL TRANSCRIPT");
+  
+  const marker = "Great! Your meeting has been successfully scheduled.";
+  const detailsSection = transcript.split(marker)[1] || ""
+
+  console.log(detailsSection, "DETAILS SECTION");
+
+  //  Step 2: Extract fields (structured parsing)
+  const name = detailsSection.match(/Name:\s*(.+)/i)?.[1]?.trim();
+  const email = detailsSection.match(/Email:\s*([^\s]+)/i)?.[1]?.trim();
+  const phone = detailsSection.match(/Phone:\s*([+\d\s]+)/i)?.[1]?.trim();
 
   console.log("Extracted Data:", { name, email, phone, summary });
 
